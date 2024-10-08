@@ -1,7 +1,7 @@
 class Mistake {
   final int? id;
   final String title;
-  final int quantity;
+  int quantity;
   final DateTime date;
 
   Mistake(

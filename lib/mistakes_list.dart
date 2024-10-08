@@ -3,8 +3,8 @@ import 'package:mistakes_tracker/entity/Mistake.dart';
 
 class MistakesList extends StatelessWidget {
   final List<Mistake> mistakes;
-  final void Function(int) onMinus;
-  final void Function(int) onPlus;
+  final void Function(int, int) onMinus;
+  final void Function(int, int) onPlus;
 
   MistakesList({
     super.key,
@@ -39,12 +39,12 @@ class MistakesList extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        onPressed: () => onMinus(mistake.quantity),
+                        onPressed: () => onMinus(mistake.quantity, index),
                         icon: const Icon(Icons.remove),
                         color: Theme.of(context).colorScheme.error,
                       ),
                       IconButton(
-                        onPressed:() => onPlus(mistake.quantity),
+                        onPressed:() => onPlus(mistake.quantity, index),
                         icon: const Icon(Icons.add),
                         color: Theme.of(context).colorScheme.error,
                       ),

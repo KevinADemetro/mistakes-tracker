@@ -15,9 +15,14 @@ class MistakesTrackerApp extends StatelessWidget {
   }
 }
 
-class MistakesTrackerPage extends StatelessWidget {
+class MistakesTrackerPage extends StatefulWidget {
   MistakesTrackerPage({super.key});
 
+  @override
+  State<MistakesTrackerPage> createState() => _MistakesTrackerPageState();
+}
+
+class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
   final List<Mistake> mistakes = [
     Mistake(title: 'title', quantity: 21, date: DateTime.now())
   ];
@@ -27,8 +32,8 @@ class MistakesTrackerPage extends StatelessWidget {
     return Scaffold(
       body: MistakesList(
           mistakes: mistakes,
-          onPlus: _increaseQuantiy,
-          onMinus: _decreaseQuantiy),
+          onPlus: _increaseQuantity,
+          onMinus: _decreaseQuantity),
       floatingActionButton: const FloatingActionButton(
         onPressed: null,
         child: Icon(Icons.add),
@@ -36,11 +41,15 @@ class MistakesTrackerPage extends StatelessWidget {
     );
   }
 
-  _increaseQuantiy(int quantity) {
-    quantity++;
+  _increaseQuantity(int quantity, int index) {
+    setState(() {
+      mistakes[index].quantity++;
+    });
   }
 
-  _decreaseQuantiy(int quantity) {
-    quantity++;
+  _decreaseQuantity(int quantity, int index) {
+    setState(() {
+      mistakes[index].quantity--;
+    });
   }
 }
