@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mistakes_tracker/components/mistake_form.dart';
 import 'package:mistakes_tracker/entity/Mistake.dart';
-import 'package:mistakes_tracker/mistakes_list.dart';
+import 'package:mistakes_tracker/components/mistakes_list.dart';
 
 main() => runApp(MistakesTrackerApp());
 
@@ -34,9 +35,9 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
           mistakes: mistakes,
           onPlus: _increaseQuantity,
           onMinus: _decreaseQuantity),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: null,
-        child: Icon(Icons.add),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => _openMistakeFormModal(context),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -48,8 +49,29 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
   }
 
   _decreaseQuantity(int quantity, int index) {
+    if (quantity > 0) {
+      setState(() {
+        mistakes[index].quantity--;
+      });
+    }
+  }
+
+  _openMistakeFormModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (_) {
+        return MistakeForm(
+          onSubmit: _addMistake,
+        );
+      },
+    );
+  }
+
+  _addMistake(String title) {
+    Mistake mistake =
+        new Mistake(title: title, quantity: 0, date: DateTime.now());
     setState(() {
-      mistakes[index].quantity--;
+      mistakes.add(mistake);
     });
   }
 }
