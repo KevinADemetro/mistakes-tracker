@@ -73,5 +73,6 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
     setState(() {
       mistakes.add(mistake);
     });
+    Navigator.of(context).pop();
   }
 }
