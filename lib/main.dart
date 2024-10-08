@@ -7,22 +7,27 @@ class MistakesTrackerApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MistakesTrackerPage();
+    return
+    MaterialApp(
+      home: MistakesTrackerPage(),
+    );
   }
 }
 
 class MistakesTrackerPage extends StatelessWidget {
   MistakesTrackerPage({super.key});
 
-  final lista = [
-
+  final List<Map<String, String>> lista = [
+    {'title' : 'teste'},
+    {'title' : 'teste2'}
   ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 400,
       child: ListView.builder(
-        itemCount: 4,
+        itemCount: 2,
         itemBuilder: (ctx, index) {
           final itemList = lista[index];
           return Card(
@@ -30,12 +35,12 @@ class MistakesTrackerPage extends StatelessWidget {
             margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 5),
             child: ListTile(
               title: Text(
-                itemList.title,
+                itemList['title'].toString(),
                 style: Theme.of(context).textTheme.titleMedium,
               ),
               trailing: IconButton(
                 onPressed: null,
-                icon: Icon(Icons.delete),
+                icon: Icon(Icons.add),
                 color: Theme.of(context).colorScheme.error,
               ),
             ),
