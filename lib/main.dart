@@ -26,9 +26,7 @@ class MistakesTrackerPage extends StatefulWidget {
 
 class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
   final DatabaseHelper _dbHelper = DatabaseHelper();
-  List<Mistake> _mistakes = [
-    Mistake(title: 'title', quantity: 21, date: DateTime.now())
-  ];
+  List<Mistake> _mistakes = [];
 
   @override
   void initState() {
@@ -43,9 +41,18 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
           mistakes: _mistakes,
           onPlus: _increaseQuantity,
           onMinus: _decreaseQuantity),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _openMistakeFormModal(context),
-        child: const Icon(Icons.add),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          FloatingActionButton(
+            onPressed: () => _updateBatch(),
+            child: const Icon(Icons.save),
+          ),
+          FloatingActionButton(
+            onPressed: () => _openMistakeFormModal(context),
+            child: const Icon(Icons.add),
+          ),
+        ],
       ),
     );
   }
@@ -82,9 +89,9 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
     Navigator.of(context).pop();
   }
 
-  Future<void> _insertMistake(Mistake mistake) async{
+  Future<void> _insertMistake(Mistake mistake) async {
     await _dbHelper.insertMistake(mistake);
-    _loadMistakes(); 
+    _loadMistakes();
   }
 
   Future<void> _loadMistakes() async {
@@ -92,5 +99,10 @@ class _MistakesTrackerPageState extends State<MistakesTrackerPage> {
     setState(() {
       _mistakes = mistakes;
     });
+  }
+
+  Future<void> _updateBatch() async{
+    await _dbHelper.updateMistakesInBatch(_mistakes);
+    _loadMistakes(); 
   }
 }
